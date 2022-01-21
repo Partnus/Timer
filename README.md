@@ -1,2 +1,2 @@
 # Timer
-Timer test
+Timer
