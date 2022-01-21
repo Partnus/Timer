@@ -1,3 +1,2 @@
 # Timer
-Timer
-slack
+Time
