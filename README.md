@@ -1,2 +1,2 @@
 # Timer
-Tim
+Time
