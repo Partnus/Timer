@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Timer">
+        <attr name="radius" format="integer"/>
+
+        <attr name="progressTint" format="color"/>
+        <attr name="progressBackgroundTint" format="color"/>
+
+        <attr name="timerStyle" format="enum">
+            <enum name="progressBar" value="0"/>
+            <enum name="progressRing" value="1"/>
+        </attr>
+    </declare-styleable>
+</resources>
