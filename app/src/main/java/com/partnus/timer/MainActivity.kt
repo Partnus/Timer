@@ -1,6 +1,8 @@
 package com.partnus.timer
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +14,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         // progressbar 생성 및 테스트 Code
         // Todo : background 기능구현 적용하기 (현재는 테스트를 위해 임시로 flow 를 사용)
         val progressBar3 = findViewById<Timer>(R.id.timer)
