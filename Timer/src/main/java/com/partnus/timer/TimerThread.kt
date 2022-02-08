@@ -1,8 +1,9 @@
 package com.partnus.timer
 
-import android.util.Log
+import android.content.Context
 
 class TimerThread(
+    private val context: Context,
     private val startTime: Long,
     private val endTime: Long,
     private val stepTime: Long = 1000,
@@ -33,6 +34,7 @@ class TimerThread(
         }
         
         TimerHandler(
+            context,
             startTime,
             endTime,
             stepTime
