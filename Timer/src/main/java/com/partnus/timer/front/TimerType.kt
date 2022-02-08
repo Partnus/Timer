@@ -1,4 +1,4 @@
-package com.partnus.timer
+package com.partnus.timer.front
 
 /**
  * {@link com.partnus.TimerableFactory} 에 적용하여,

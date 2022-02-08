@@ -1,4 +1,4 @@
-package com.partnus.timer
+package com.partnus.timer.back
 
 import android.content.BroadcastReceiver
 import android.content.Context

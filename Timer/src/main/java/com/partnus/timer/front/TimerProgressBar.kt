@@ -1,10 +1,11 @@
-package com.partnus.timer
+package com.partnus.timer.front
 
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import com.partnus.timer.R
 
 /**
  * xml 에서는 timerStyle 을 progressBar 로 설정했을 때 만들어지는 View

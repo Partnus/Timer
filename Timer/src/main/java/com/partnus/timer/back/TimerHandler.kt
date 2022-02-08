@@ -1,4 +1,4 @@
-package com.partnus.timer
+package com.partnus.timer.back
 
 import android.content.Context
 import android.content.Intent
