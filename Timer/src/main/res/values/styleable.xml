@@ -5,7 +5,7 @@
 
         <attr name="progressTint" format="color"/>
         <attr name="progressBackgroundTint" format="color"/>
-        <attr name="progressSize" format="float"/>
+        <attr name="progressTextSize" format="float"/>
 
         <attr name="timerStyle" format="enum">
             <enum name="progressBar" value="0"/>
