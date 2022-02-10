@@ -6,4 +6,6 @@ package com.partnus.timer
 interface Progressable {
     fun setProgressBackgroundColor(colorRes: Int) // progressbar 배경색 설정
     fun setProgressColor(colorRes: Int) // progressbar 색 설정
+
+    fun setProgressTextSize(size: Float) // progressText 텍스트 크기 설정정
 }

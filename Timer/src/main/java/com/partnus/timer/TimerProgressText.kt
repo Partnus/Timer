@@ -3,18 +3,25 @@ package com.partnus.timer
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.TextView
 
 /**
- * xml 에서는 timerStyle 을 progressBar 로 설정했을 때 만들어지는 View
- * {@link com.partnus.TimerableFactory} 에 {@link com.partnus.TimerType} 의 PROGRESS_BAR 에 대응한다
- * progress bar 형태로 timer 기능을 수행하는 Custom View
+ * xml 에서는 timerStyle 을 progressText 로 설정했을 때 만들어지는 View
+ * {@link com.partnus.TimerableFactory} 에 {@link com.partnus.TimerType} 의 PROGRESS_TEXT 에 대응한다
+ * progress text 형태로 timer 기능을 수행하는 Custom View
  */
-class TimerProgressBar(context: Context, attrs: AttributeSet) :
-    ProgressBar(context, attrs, android.R.attr.progressBarStyleHorizontal),
+class TimerProgressText (context: Context, attrs: AttributeSet) :
+    LinearLayout(context, attrs),
     Timerable,
     Progressable {
+
+    var layout: LinearLayout
+    var timerText: TextView
 
     companion object {
         var initTime = 0L
@@ -22,14 +29,14 @@ class TimerProgressBar(context: Context, attrs: AttributeSet) :
     }
 
     init {
-        layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        )
+
+        val view = View.inflate(context, R.layout.layout_progresstext, this)
+        layout = view.findViewById(R.id.layout)
+        timerText = view.findViewById(R.id.timerText)
 
         setInitTime(100) // default initTime
         setCurrentTime(0) // default current
-        progressDrawable = resources.getDrawable(R.drawable.layout_progressbar, null) // custom drawable 적용
+
         context.obtainStyledAttributes(attrs, R.styleable.Timer).also { typedArray ->
             // set progress background color
             setProgressBackgroundColor(
@@ -46,14 +53,22 @@ class TimerProgressBar(context: Context, attrs: AttributeSet) :
                     resources.getColor(R.color.teal_200, null) // default progress tint
                 )
             )
+
+            // set progress text size
+            setProgressTextSize(
+                typedArray.getFloat(
+                    R.styleable.Timer_progressSize,
+                    20.0F // default progress tint
+                )
+            )
         }
 
         invalidateProgress()
     }
 
     private fun invalidateProgress() {
-        // currentTime, initTime 기반으로 progress 상태 업데이트
-        progress = (currentTime * 100 / initTime.toDouble()).toInt()
+        // currentTime, initTime 기반으로 progress text 상태 업데이트
+        timerText.text = (currentTime * 100 / initTime.toDouble()).toString()
     }
 
     override fun getCurrentTime(): Long = currentTime
@@ -71,14 +86,16 @@ class TimerProgressBar(context: Context, attrs: AttributeSet) :
     }
 
     override fun setProgressBackgroundColor(color: Int) {
-        progressBackgroundTintList = ColorStateList.valueOf(color)
+        timerText.setBackgroundColor(color)
     }
 
     override fun setProgressColor(color: Int) {
-        progressTintList = ColorStateList.valueOf(color)
+        timerText.setTextColor(color)
     }
 
     override fun setProgressTextSize(size: Float) {
-        TODO("Not yet implemented")
+        timerText.textSize = size
     }
+
+
 }

@@ -5,10 +5,12 @@
 
         <attr name="progressTint" format="color"/>
         <attr name="progressBackgroundTint" format="color"/>
+        <attr name="progressSize" format="float"/>
 
         <attr name="timerStyle" format="enum">
             <enum name="progressBar" value="0"/>
-            <enum name="progressRing" value="1"/>
+            <enum name="progressText" value="1"/>
+            <enum name="progressRing" value="2"/>
         </attr>
     </declare-styleable>
 </resources>
