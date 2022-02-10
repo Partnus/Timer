@@ -1,10 +1,11 @@
-package com.partnus.timer
+package com.partnus.timer.front
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.partnus.timer.R
 import com.partnus.timer.databinding.PartnusTimerBinding
 
 /**
