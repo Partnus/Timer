@@ -57,7 +57,7 @@ class TimerProgressText (context: Context, attrs: AttributeSet) :
             // set progress text size
             setProgressTextSize(
                 typedArray.getFloat(
-                    R.styleable.Timer_progressSize,
+                    R.styleable.Timer_progressTextSize,
                     20.0F // default progress tint
                 )
             )

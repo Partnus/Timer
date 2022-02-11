@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:progressBackgroundTint="@color/purple_200"
         app:progressTint="@color/white"
-        app:progressSize="50"
+        app:progressTextSize="50"
         app:timerStyle="progressText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
