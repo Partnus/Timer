@@ -1,4 +1,4 @@
-package com.partnus.timer
+package com.partnus.timer.front
 
 import android.content.Context
 import android.util.AttributeSet

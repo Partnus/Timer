@@ -1,4 +1,4 @@
-package com.partnus.timer
+package com.partnus.timer.front
 
 /**
  * Progress 종류(progress bar, 원 모양 progress 등 )들이 상속받아서 구현할 수 있도록 만든 interface
