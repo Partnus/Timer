@@ -6,16 +6,19 @@ import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.RotateDrawable
 import android.os.Build
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.widget.ProgressBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.partnus.timer.R
+import com.partnus.timer.databinding.PartnusTimerBinding
+import com.partnus.timer.databinding.ProgressRingBinding
 
 class TimerProgressRing(context: Context, attrs: AttributeSet) :
     ConstraintLayout(context, attrs),
     Timerable,
     Progressable {
 
-    var progressRing:ProgressBar? = null
+    var binding: ProgressRingBinding
 
     companion object {
         var initTime = 0L
@@ -23,14 +26,14 @@ class TimerProgressRing(context: Context, attrs: AttributeSet) :
     }
 
     init {
-        inflate(context, R.layout.progress_ring, this) // xml init
+        val view = LayoutInflater.from(context).inflate(R.layout.progress_ring, this)  // xml init
+        binding = ProgressRingBinding.bind(view)
 
         setInitTime(100) // default initTime
         setCurrentTime(0) // default current
 
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
 
-        progressRing = findViewById(R.id.progressRing)
         context.obtainStyledAttributes(attrs, R.styleable.Timer).also { typedArray ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 // set progress background color
@@ -55,7 +58,7 @@ class TimerProgressRing(context: Context, attrs: AttributeSet) :
 
     private fun invalidateProgress() {
         // currentTime, initTime 기반으로 progress 상태 업데이트
-        progressRing?.progress = (currentTime * 100 / initTime.toDouble()).toInt()
+        binding.progressRing.progress = (currentTime * 100 / initTime.toDouble()).toInt()
     }
 
     override fun getCurrentTime(): Long = currentTime
@@ -73,17 +76,13 @@ class TimerProgressRing(context: Context, attrs: AttributeSet) :
     }
 
     override fun setProgressBackgroundColor(color: Int) {
-        progressRing?.background?.also { drawable ->
-            val shapeDrawable = drawable as GradientDrawable
-            shapeDrawable.setColor(color)
-        }
+        val drawable = binding.progressRing.background as GradientDrawable
+        drawable.setColor(color)
     }
 
     override fun setProgressColor(color: Int) {
-        progressRing?.progressDrawable?.also { drawable ->
-            val shapeDrawable = drawable as RotateDrawable
-            shapeDrawable.setTintList(ColorStateList.valueOf(color))
-        }
+        val drawable = binding.progressRing.progressDrawable as RotateDrawable
+        drawable.setTintList(ColorStateList.valueOf(color))
     }
 
     override fun setProgressTextSize(size: Float) {
