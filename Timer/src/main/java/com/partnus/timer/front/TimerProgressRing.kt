@@ -51,6 +51,22 @@ class TimerProgressRing(context: Context, attrs: AttributeSet) :
                         resources.getColor(R.color.teal_200, null) // default progress tint
                     )
                 )
+            } else {
+                // set progress background color
+                setProgressBackgroundColor(
+                    typedArray.getInt(
+                        R.styleable.Timer_progressBackgroundTint,
+                        resources.getColor(R.color.gray) // default progress background tint
+                    )
+                )
+
+                // set progress color
+                setProgressColor(
+                    typedArray.getInt(
+                        R.styleable.Timer_progressTint,
+                        resources.getColor(R.color.teal_200) // default progress tint
+                    )
+                )
             }
         }
         invalidateProgress()
