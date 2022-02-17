@@ -80,6 +80,7 @@ class TimerProgressBar(context: Context, attrs: AttributeSet) :
     }
 
     override fun setProgressTextSize(size: Float) {
+        // progress ring 은 현재 text가 없지만, text 로 표현하는 기능이 추가될 것을 대비하여 생성
         TODO("Not yet implemented")
     }
 }
