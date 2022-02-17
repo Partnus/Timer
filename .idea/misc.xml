@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/jihyun/Desktop/Timer/Timer/src/main/res/drawable/layout_progressbar.xml" value="0.1265" />
+        <entry key="..\:/Users/jihyun/Desktop/Timer/Timer/src/main/res/layout/layout_progresstext.xml" value="0.12335359675785208" />
+        <entry key="..\:/Users/jihyun/Desktop/Timer/Timer/src/main/res/layout/partnus_timer.xml" value="0.1" />
+        <entry key="..\:/Users/jihyun/Desktop/Timer/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/jihyun/Desktop/Timer/app/src/main/res/layout/activity_main2.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.37604166666666666" />
       </map>
     </option>
