@@ -9,13 +9,13 @@
     <com.partnus.timer.front.Timer
         android:id="@+id/timer"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="100dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:progressBackgroundTint="@color/purple_200"
         app:progressTint="@color/purple_500"
-        app:timerStyle="progressBar" />
+        app:timerStyle="progressRing" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

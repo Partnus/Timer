@@ -15,9 +15,9 @@ class TimerableFactory {
             TimerType.PROGRESS_TEXT -> {
                 TimerProgressText(context, attrs)
             }
-//            TimerType.PROGRESS_RING -> {
-//                null
-//            }
+            TimerType.PROGRESS_RING -> {
+                TimerProgressRing(context, attrs)
+            }
         }
     }
 }

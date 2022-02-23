@@ -6,6 +6,6 @@ package com.partnus.timer.front
  */
 enum class TimerType {
     PROGRESS_BAR,
-    PROGRESS_TEXT
-    /*PROGRESS_RING*/
+    PROGRESS_TEXT,
+    PROGRESS_RING
 }
