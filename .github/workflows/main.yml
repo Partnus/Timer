@@ -36,5 +36,5 @@ jobs:
           echo test, and deploy your project.
           
       # slack으로 메시지 발송
-      - name: send message to slack
-        run: curl -X POST -H "Content-type:application/json" --data '{"text":"Timer | build completed!"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+      #- name: send message to slack
+       # run: curl -X POST -H "Content-type:application/json" --data '{"text":"Timer | build completed!"}' ${{ secrets.SLACK_WEBHOOK_URL }}
