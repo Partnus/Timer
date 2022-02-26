@@ -1,12 +1,11 @@
 package com.partnus.timer.back
 
 import android.content.Context
-import android.content.Intent
 import android.content.IntentFilter
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.work.*
 
 /**/
 class TimerHandler(
@@ -24,24 +23,28 @@ class TimerHandler(
     val br = TimerBroadcastReceiver()
     val filter = IntentFilter(TIMER_BROADCAST_ACTION)
 
+    // WorkManager
+    private val workManager = WorkManager.getInstance(context)
+
     init {
         currentTime = startTime
     }
 
     override fun handleMessage(msg: Message) {
         super.handleMessage(msg)
+        val remaining = endTime - currentTime
         when (msg.what) {
             TIMER_PAUSE ->{
-
+                cancelWorkRequest() //
             }
             TIMER_RESET -> {
-                unregisterLocalBroadcast() // 리셋시 브로드캐스트 등록 해제
+                cancelWorkRequest() //
 
                 currentTime = startTime
                 this.sendEmptyMessage(TIMER_PAUSE)
             }
             TIMER_START -> {
-                registerLocalBroadcast() // 시작시 브로드캐스트 등록
+                enqueueTimerWorkRequest(remaining) //
 
                 this.sendEmptyMessage(TIMER_CONTINUE)
             }
@@ -53,26 +56,34 @@ class TimerHandler(
                     this.sendEmptyMessage(TIMER_STOP)
             }
             TIMER_STOP -> {
-                sendBroadcastMessage() // 타이머 종료시 브로드캐스트 전송
-                unregisterLocalBroadcast() // 전송 후 등록 해제
+
 
                 endFunc?.let { it() }
             }
         }
     }
 
-    private fun registerLocalBroadcast() {
-        LocalBroadcastManager.getInstance(context).registerReceiver(br, filter)
+    private fun enqueueTimerWorkRequest(second: Long) {
+
+        val workData =
+            Data.Builder()
+            .putLong(WORKER_DATA_PARAM_TIME, second)
+            .build()
+
+        val workRequest =
+            OneTimeWorkRequestBuilder<TimerWorker>()
+            .setInputData(
+                workData
+            )
+            .build()
+
+        workManager.enqueue(workRequest)
+
     }
-    private fun unregisterLocalBroadcast() {
-        LocalBroadcastManager.getInstance(context).unregisterReceiver(br)
+    private fun cancelWorkRequest() {
+        workManager.cancelAllWork()
     }
-    private fun sendBroadcastMessage() {
-        val intent = Intent().also {
-            it.setAction(TIMER_BROADCAST_ACTION)
-        }
-        LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
-    }
+
 
 
     companion object {
@@ -83,5 +94,6 @@ class TimerHandler(
         const val TIMER_STOP = 1004     // 타이머가 종료 된 경우
         // 유저는 이 액션으로 직접 브로드캐스트리시버를 등록하여 종료시에 시행될 작업을 처리할 수도 있음
         const val TIMER_BROADCAST_ACTION = "com.partnus.timer.TIMER_NOTIFICATION"
+        const val WORKER_DATA_PARAM_TIME = "WORKER_DATA_PARAM_TIME"
     }
 }
