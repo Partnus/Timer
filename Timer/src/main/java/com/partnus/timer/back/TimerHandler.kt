@@ -19,10 +19,6 @@ class TimerHandler(
     // UI에서 현재 측정 시간을 가져 가기위해
     var currentTime: Long = 0
 
-    // BroadcastReceiver register 위한 변수
-    val br = TimerBroadcastReceiver()
-    val filter = IntentFilter(TIMER_BROADCAST_ACTION)
-
     // WorkManager
     private val workManager = WorkManager.getInstance(context)
 
@@ -35,16 +31,16 @@ class TimerHandler(
         val remaining = endTime - currentTime
         when (msg.what) {
             TIMER_PAUSE ->{
-                cancelWorkRequest() //
+                cancelWorkRequest() // Pause 에 WorkRequest 취소
             }
             TIMER_RESET -> {
-                cancelWorkRequest() //
+                cancelWorkRequest() // Reset 에 WorkRequest 취소
 
                 currentTime = startTime
                 this.sendEmptyMessage(TIMER_PAUSE)
             }
             TIMER_START -> {
-                enqueueTimerWorkRequest(remaining) //
+                enqueueTimerWorkRequest(remaining) // Start 에 WorkRequest 를 WorkManager 에 enqueue
 
                 this.sendEmptyMessage(TIMER_CONTINUE)
             }
@@ -81,7 +77,7 @@ class TimerHandler(
 
     }
     private fun cancelWorkRequest() {
-        workManager.cancelAllWork()
+        workManager.cancelAllWork() // TODO id 나 tag 로 특정지어 취소하는 코드로 변경 예정
     }
 
 
