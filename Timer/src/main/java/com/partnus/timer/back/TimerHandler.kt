@@ -88,8 +88,6 @@ class TimerHandler(
         const val TIMER_START = 1002    // 타이머 시작
         const val TIMER_CONTINUE = 1003 // 타이머가 작동 중인 경우
         const val TIMER_STOP = 1004     // 타이머가 종료 된 경우
-        // 유저는 이 액션으로 직접 브로드캐스트리시버를 등록하여 종료시에 시행될 작업을 처리할 수도 있음
-        const val TIMER_BROADCAST_ACTION = "com.partnus.timer.TIMER_NOTIFICATION"
         const val WORKER_DATA_PARAM_TIME = "WORKER_DATA_PARAM_TIME"
     }
 }
