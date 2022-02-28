@@ -6,19 +6,29 @@ import android.content.IntentFilter
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
-/**/
-class TimerHandler(
+/*
+*
+* */
+internal class TimerHandler(
     private val context: Context,
-    val startTime: Long,
-    val endTime: Long,
-    val stepTime: Long = 1000,
-    val endFunc: (() -> Unit)? = null
+    private val startTime: Long,
+    private val endTime: Long,
+    private val stepTime: Long = 1000,
+    private val currentTimeChangeFun : ((Long, TimerThread) -> Unit)? = null,
+    private val timerThread: TimerThread,
 ) : Handler(Looper.getMainLooper()) {
+
+    var endFunc: (() -> Unit)? = null
 
     // UI에서 현재 측정 시간을 가져 가기위해
     var currentTime: Long = 0
+        set(value) {
+            currentTimeChangeFun?.invoke(value, timerThread)
+            field = value
+        }
 
     // BroadcastReceiver register 위한 변수
     val br = TimerBroadcastReceiver()
@@ -30,19 +40,18 @@ class TimerHandler(
 
     override fun handleMessage(msg: Message) {
         super.handleMessage(msg)
+        Log.d("로그", "handleMessage: $msg")
         when (msg.what) {
             TIMER_PAUSE ->{
 
             }
             TIMER_RESET -> {
                 unregisterLocalBroadcast() // 리셋시 브로드캐스트 등록 해제
-
                 currentTime = startTime
                 this.sendEmptyMessage(TIMER_PAUSE)
             }
             TIMER_START -> {
                 registerLocalBroadcast() // 시작시 브로드캐스트 등록
-
                 this.sendEmptyMessage(TIMER_CONTINUE)
             }
             TIMER_CONTINUE -> {
@@ -76,11 +85,11 @@ class TimerHandler(
 
 
     companion object {
-        const val TIMER_PAUSE = 1000    // 일시 정지 상태
-        const val TIMER_RESET = 1001    // 타이머를 다시 시작
-        const val TIMER_START = 1002    // 타이머 시작
-        const val TIMER_CONTINUE = 1003 // 타이머가 작동 중인 경우
-        const val TIMER_STOP = 1004     // 타이머가 종료 된 경우
+        internal const val TIMER_PAUSE = 1000    // 일시 정지 상태
+        internal const val TIMER_RESET = 1001    // 타이머를 다시 시작
+        internal const val TIMER_START = 1002    // 타이머 시작
+        internal const val TIMER_CONTINUE = 1003 // 타이머가 작동 중인 경우
+        internal const val TIMER_STOP = 1004     // 타이머가 종료 된 경우
         // 유저는 이 액션으로 직접 브로드캐스트리시버를 등록하여 종료시에 시행될 작업을 처리할 수도 있음
         const val TIMER_BROADCAST_ACTION = "com.partnus.timer.TIMER_NOTIFICATION"
     }
