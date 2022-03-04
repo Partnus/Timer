@@ -2,10 +2,12 @@ package com.partnus.timer.front
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.partnus.timer.R
+import com.partnus.timer.back.TimerThread
 import com.partnus.timer.databinding.PartnusTimerBinding
 
 /**
@@ -45,4 +47,18 @@ class Timer(context: Context, attrs: AttributeSet) : ConstraintLayout(context, a
     override fun getInitTime(): Long = timer.getInitTime()
 
     override fun getCurrentTime(): Long = timer.getCurrentTime()
+
+    fun start() {
+        TimerThread(
+            context = context,
+            startTime = 0,
+            endTime = timer.getInitTime(),
+            currentTimeChangeFun = { currentTime, timerThread ->
+                timer.setCurrentTime(currentTime)
+            }
+        ).apply {
+            makeThread()
+            startThread()
+        }
+    }
 }
