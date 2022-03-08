@@ -1,7 +1,6 @@
 package com.partnus.timer.back
 
 import android.content.Context
-import android.content.IntentFilter
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
@@ -10,14 +9,21 @@ import androidx.work.*
 /**/
 class TimerHandler(
     private val context: Context,
-    val startTime: Long,
-    val endTime: Long,
-    val stepTime: Long = 1000,
-    val endFunc: (() -> Unit)? = null
+    private val startTime: Long,
+    private val endTime: Long,
+    private val stepTime: Long = 1000,
+    private val currentTimeChangeFun : ((Long, TimerThread) -> Unit)? = null,
+    private val timerThread: TimerThread,
 ) : Handler(Looper.getMainLooper()) {
+
+    var endFunc: (() -> Unit)? = null
 
     // UI에서 현재 측정 시간을 가져 가기위해
     var currentTime: Long = 0
+        set(value) {
+            currentTimeChangeFun?.invoke(value, timerThread)
+            field = value
+        }
 
     // WorkManager
     private val workManager = WorkManager.getInstance(context)
