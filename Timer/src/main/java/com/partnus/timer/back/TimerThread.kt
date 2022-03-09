@@ -1,7 +1,6 @@
 package com.partnus.timer.back
 
 import android.content.Context
-import android.util.Log
 
 class TimerThread(
     private val context: Context,
