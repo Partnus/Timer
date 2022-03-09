@@ -47,21 +47,27 @@ class TimerThread(
         thread?.let {
             thread!!.start()
             timerHandler.sendEmptyMessage(TimerHandler.TIMER_START)
+            timerHandler.removeCallbacks { }
         }
     }
 
     fun timerPause() {
-        // TODO:: Delayed remove 방법 필요
+        timerHandler.sendEmptyMessage(TimerHandler.TIMER_PAUSE)
     }
 
     fun timerReset(){
-
+        timerHandler.sendEmptyMessage(TimerHandler.TIMER_RESET)
     }
 
     fun timerStop(){
+        timerHandler.sendEmptyMessage(TimerHandler.TIMER_STOP)
+    }
 
+    fun timerStart(){
+        timerHandler.sendEmptyMessage(TimerHandler.TIMER_START)
     }
 
     fun threadEnabled(): Boolean = thread != null
     fun threadIsAlive(): Boolean = if (thread != null) thread!!.isAlive else false
+
 }
