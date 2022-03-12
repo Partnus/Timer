@@ -35,6 +35,7 @@ class TimerHandler(
     override fun handleMessage(msg: Message) {
         super.handleMessage(msg)
         val remaining = endTime - currentTime
+        if(msg.what != TIMER_CONTINUE) removeMessages(TIMER_CONTINUE)
         when (msg.what) {
             TIMER_PAUSE ->{
                 cancelWorkRequest() // Pause 에 WorkRequest 취소
@@ -47,7 +48,6 @@ class TimerHandler(
             }
             TIMER_START -> {
                 enqueueTimerWorkRequest(remaining) // Start 에 WorkRequest 를 WorkManager 에 enqueue
-
                 this.sendEmptyMessage(TIMER_CONTINUE)
             }
             TIMER_CONTINUE -> {
@@ -58,8 +58,6 @@ class TimerHandler(
                     this.sendEmptyMessage(TIMER_STOP)
             }
             TIMER_STOP -> {
-
-
                 endFunc?.let { it() }
             }
         }
@@ -85,8 +83,6 @@ class TimerHandler(
     private fun cancelWorkRequest() {
         workManager.cancelAllWork() // TODO id 나 tag 로 특정지어 취소하는 코드로 변경 예정
     }
-
-
 
     companion object {
         const val TIMER_PAUSE = 1000    // 일시 정지 상태
